@@ -1,0 +1,54 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using Newtonsoft.Json;
+using Tavisca.Platform.Common.Serialization;
+using Tavisca.Hotels;
+using System;
+
+namespace <#=EnumNamespace#>
+{
+    public class <#=EnumName#>Translator : JsonConverter
+    {
+    
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var enumValue = (<#=EnumName#>) value;
+            switch (enumValue)
+            {<# foreach(var enumValue in EnumValues)
+				{#>
+
+                case <#=EnumName#>.<#=enumValue#>:
+                    writer.WriteValue("<#=enumValue#>");
+                   break;  
+				<# }#>	              
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return typeof (<#=EnumName#>) == objectType;
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            var value = reader.Value.ToString().ToLower();
+
+            switch (value)
+            {
+			  <#foreach(var enumValue in EnumValues)
+				{#>
+
+                case "<#=enumValue.ToLower()#>":
+                    return <#=EnumName#>.<#=enumValue#>; 
+					<# }#>             
+                default:
+                    throw new ArgumentOutOfRangeException($"Invalid value : {value}");
+            }
+        }
+    }
+}

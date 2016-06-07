@@ -1,0 +1,81 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using Newtonsoft.Json;
+using Tavisca.Platform.Common.Serialization;
+using <#=Namespace#>;
+using Newtonsoft.Json.Linq;
+using System;
+
+namespace <#=Namespace#>.Translator
+{
+     public class <#=ClassName#>Translator: JsonConverter
+     {
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var actualObject = value as <#=ClassName#>;
+            if (actualObject == null)
+            {
+                writer.WriteNull();
+                return;
+            }
+
+            writer.WriteStartObject();
+             writer<#int propertiesCount=Properties.Count; 		 
+		foreach (var propertyName in Properties)
+		{
+		var camelCaseName=ToCamelCase(propertyName.Name);
+		bool serializationRequired=IsSerializerRequired(propertyName);
+		if(Properties.IndexOf(propertyName)==propertiesCount-1)
+		{
+		   if(!serializationRequired)
+		    {
+		    #>.WriteField("<#=camelCaseName#>", actualObject.<#=propertyName.Name#>.ToString());
+			<#}
+		   else 
+			{#>.WriteField("<#=camelCaseName#>", actualObject.<#=propertyName.Name#>,serializer);
+			<#}
+			}	
+		else
+		{
+		  if(!serializationRequired)
+		   {
+		   #>.WriteField("<#=camelCaseName#>", actualObject.<#=propertyName.Name#>.ToString())
+		   <#}
+		   else
+		   {#>.WriteField("<#=camelCaseName#>", actualObject.<#=propertyName.Name#>,serializer)
+		   <#}
+		   }		   
+		   }#>
+	writer.WriteEndObject();
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            var json = JToken.ReadFrom(reader) as JObject;
+            if (json == null)
+                return null;           
+			
+           <#foreach (var propertyName in Properties)
+		   {
+		     var camelCaseName=ToCamelCase(propertyName.Name);
+			 bool serializationRequired=IsSerializerRequired(propertyName);
+			 if(!serializationRequired)
+		    {
+		    #><#=GetPropertySetter(propertyName)#>
+			<#}
+		   else 
+			{#>var <#=camelCaseName#>=json.<#=GetPropertySetter(propertyName)#>,serializer);
+			<#}			
+			}#>
+            var actualObject=new <#=ClassName#>(			<#foreach (var propertyName in ConstructorParameters)		   {			 #><#=propertyName#>,	<#}#>);
+			return actualObject;
+        }
+       public override bool CanConvert(Type objectType)
+        {
+            return typeof (<#=ClassName#>) == objectType;
+        }
+	}
+ }
