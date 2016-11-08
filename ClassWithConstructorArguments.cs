@@ -9,16 +9,16 @@
 // ------------------------------------------------------------------------------
 namespace JsonTranslator
 {
+    using System;
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
-    using System;
     
     /// <summary>
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+    #line 1 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class ClassWithConstructorArguments : ClassWithConstructorArgumentsBase
     {
@@ -28,23 +28,24 @@ namespace JsonTranslator
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using Newtonsoft.Json;\r\nusing Tavisca.Platform.Common.Serialization;\r\nusing ");
+            this.Write("using Newtonsoft.Json;\r\nusing ");
             
-            #line 8 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 8 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Namespace));
             
             #line default
             #line hidden
-            this.Write(";\r\nusing Newtonsoft.Json.Linq;\r\nusing System;\r\n\r\nnamespace ");
+            this.Write(";\r\nusing Newtonsoft.Json.Linq;\r\nusing System;\r\nusing Tavisca.USG.Common.WebAPIHan" +
+                    "dler;\r\n\r\nnamespace ");
             
-            #line 12 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 13 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Namespace));
             
             #line default
             #line hidden
             this.Write(".Translator\r\n{\r\n     public class ");
             
-            #line 14 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 15 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
@@ -53,20 +54,20 @@ namespace JsonTranslator
                     "ter writer, object value, JsonSerializer serializer)\r\n        {\r\n            var" +
                     " actualObject = value as ");
             
-            #line 18 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 19 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
             this.Write(";\r\n            if (actualObject == null)\r\n            {\r\n                writer.W" +
                     "riteNull();\r\n                return;\r\n            }\r\n\r\n            writer.WriteS" +
-                    "tartObject();\r\n             writer");
+                    "tartObject();\r\n             ");
             
-            #line 26 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 27 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
 int propertiesCount=Properties.Count; 		 
 		foreach (var propertyName in Properties)
 		{
-		var camelCaseName=ToCamelCase(propertyName.Name);
+		var camelCaseName=GetJsonPropertyName(propertyName);
 		bool serializationRequired=IsSerializerRequired(propertyName);
 		if(Properties.IndexOf(propertyName)==propertiesCount-1)
 		{
@@ -76,96 +77,110 @@ int propertiesCount=Properties.Count;
             
             #line default
             #line hidden
-            this.Write(".WriteField(\"");
+            this.Write("writer.WriteField(\"");
             
-            #line 35 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(camelCaseName));
+            #line 36 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetJsonPropertyName(camelCaseName)));
             
             #line default
             #line hidden
             this.Write("\", actualObject.");
             
-            #line 35 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 36 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(propertyName.Name));
             
             #line default
             #line hidden
-            this.Write(".ToString());\r\n\t\t\t");
+            this.Write(");\r\n\t\t\t");
             
-            #line 36 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 37 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
 }
 		   else 
 			{
             
             #line default
             #line hidden
-            this.Write(".WriteField(\"");
+            this.Write("writer.WriteField(\"");
             
-            #line 38 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(camelCaseName));
+            #line 39 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetJsonPropertyName(camelCaseName)));
             
             #line default
             #line hidden
             this.Write("\", actualObject.");
             
-            #line 38 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 39 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(propertyName.Name));
             
             #line default
             #line hidden
             this.Write(",serializer);\r\n\t\t\t");
             
-            #line 39 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 40 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
 }
 			}	
 		else
 		{
 		  if(!serializationRequired)
 		   {
-		   
+		   if(propertyName.PropertyType.IsGenericType&&propertyName.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)){
             
             #line default
             #line hidden
-            this.Write(".WriteField(\"");
+            this.Write("\t\t   if (actualObject.");
             
-            #line 45 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(camelCaseName));
+            #line 47 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(propertyName.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" != null)\r\n\t\t   ");
+            
+            #line 48 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write("writer.WriteField(\"");
+            
+            #line 48 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetJsonPropertyName(camelCaseName)));
             
             #line default
             #line hidden
             this.Write("\", actualObject.");
             
-            #line 45 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 48 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(propertyName.Name));
             
             #line default
             #line hidden
-            this.Write(".ToString())\r\n\t\t   ");
+            this.Write(".ToString());\r\n\t\t   ");
             
-            #line 46 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 49 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
 }
 		   else
 		   {
             
             #line default
             #line hidden
-            this.Write(".WriteField(\"");
+            this.Write("writer.WriteField(\"");
             
-            #line 48 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(camelCaseName));
+            #line 51 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetJsonPropertyName(camelCaseName)));
             
             #line default
             #line hidden
             this.Write("\", actualObject.");
             
-            #line 48 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 51 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(propertyName.Name));
             
             #line default
             #line hidden
-            this.Write(",serializer)\r\n\t\t   ");
+            this.Write(",serializer);\r\n\t\t   ");
             
-            #line 49 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 52 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
 }
 		   }		   
 		   }
@@ -183,10 +198,10 @@ int propertiesCount=Properties.Count;
 			
            ");
             
-            #line 61 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 64 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
 foreach (var propertyName in Properties)
 		   {
-		     var camelCaseName=ToCamelCase(propertyName.Name);
+		     var camelCaseName=GetJsonPropertyName(propertyName.Name);
 			 bool serializationRequired=IsSerializerRequired(propertyName);
 			 if(!serializationRequired)
 		    {
@@ -195,14 +210,14 @@ foreach (var propertyName in Properties)
             #line default
             #line hidden
             
-            #line 67 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 70 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetPropertySetter(propertyName)));
             
             #line default
             #line hidden
             this.Write("\r\n\t\t\t");
             
-            #line 68 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 71 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
 }
 		   else 
 			{
@@ -211,57 +226,98 @@ foreach (var propertyName in Properties)
             #line hidden
             this.Write("var ");
             
-            #line 70 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 73 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(camelCaseName));
             
             #line default
             #line hidden
             this.Write("=json.");
             
-            #line 70 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 73 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetPropertySetter(propertyName)));
             
             #line default
             #line hidden
             this.Write(",serializer);\r\n\t\t\t");
             
-            #line 71 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 74 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
 }			
 			}
             
             #line default
             #line hidden
+            this.Write("\t\t\t");
+            
+            #line 76 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+foreach (var ConstructorParameters in ConstructorsParameters){
+            
+            #line default
+            #line hidden
             this.Write("            var actualObject=new ");
             
-            #line 73 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 77 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
-            this.Write("(\t\t\t");
+            this.Write("( ");
             
-            #line 73 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 77 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
 foreach (var propertyName in ConstructorParameters)		   {			 
             
             #line default
             #line hidden
             
-            #line 73 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 77 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
             
             #line default
             #line hidden
-            this.Write(",\t");
+            this.Write(", ");
             
-            #line 73 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 77 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
 }
             
             #line default
             #line hidden
-            this.Write(");\r\n\t\t\treturn actualObject;\r\n        }\r\n       public override bool CanConvert(Ty" +
-                    "pe objectType)\r\n        {\r\n            return typeof (");
+            this.Write("){\r\n                ");
             
-            #line 78 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            #line 78 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+foreach (var propertyName in Properties)   {			 
+            
+            #line default
+            #line hidden
+            
+            #line 78 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(propertyName.Name));
+            
+            #line default
+            #line hidden
+            this.Write("=");
+            
+            #line 78 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(propertyName.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" ,\r\n  ");
+            
+            #line 79 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write("            };\r\n\t\t\t");
+            
+            #line 81 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\treturn actualObject;\r\n        }\r\n       public override bool CanConvert(Type o" +
+                    "bjectType)\r\n        {\r\n            return typeof (");
+            
+            #line 86 "D:\Code\Platform\New\Tools\JsonTranslator\ClassWithConstructorArguments.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default

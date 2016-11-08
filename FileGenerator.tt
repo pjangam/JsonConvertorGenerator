@@ -25,7 +25,7 @@ namespace <#=Namespace#>
                 parser<#int propertiesCount=Properties.Count;
            foreach (var propertyName in Properties)
 		   {
-		   var camelCaseName=ToCamelCase(propertyName.Name);
+		   var camelCaseName=(propertyName.Name);
 			if(Properties.IndexOf(propertyName)==propertiesCount-1)
 		    {#>.Setup("<#=camelCaseName#>", (r, v) => <#=GetPropertySetter(propertyName)#>);
 			<#}else{#>.Setup("<#=camelCaseName#>", (r, v) => <#=GetPropertySetter(propertyName)#>)
@@ -39,7 +39,7 @@ namespace <#=Namespace#>
              writer<# 		 
 		foreach (var propertyName in Properties)
 		{
-		var camelCaseName=ToCamelCase(propertyName.Name);
+		var camelCaseName=(propertyName.Name);
 		bool serializationRequired=IsSerializerRequired(propertyName);
 		if(Properties.IndexOf(propertyName)==propertiesCount-1)
 		{

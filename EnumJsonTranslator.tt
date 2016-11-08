@@ -4,11 +4,11 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 using Newtonsoft.Json;
-using Tavisca.Platform.Common.Serialization;
-using Tavisca.Hotels;
 using System;
+using System;
+using Tavisca.USG.Common.WebAPIHandler;
 
-namespace <#=EnumNamespace#>
+namespace <#=EnumNamespace#>.Translator
 {
     public class <#=EnumName#>Translator : JsonConverter
     {
@@ -25,7 +25,7 @@ namespace <#=EnumNamespace#>
                    break;  
 				<# }#>	              
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new NotImplementedException($"Translator not implemented for {enumValue}");
             }
         }
 
@@ -47,7 +47,8 @@ namespace <#=EnumNamespace#>
                     return <#=EnumName#>.<#=enumValue#>; 
 					<# }#>             
                 default:
-                    throw new ArgumentOutOfRangeException($"Invalid value : {value}");
+                    SerializerUtility.ThrowValidationException(reader.Path, " any one of <#=GetCommaSeperated(EnumValues)#>");
+                    return default(<#=EnumName#>);
             }
         }
     }

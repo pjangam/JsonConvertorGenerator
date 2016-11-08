@@ -46,7 +46,7 @@ namespace JsonTranslator
                 var constructor = type.GetConstructor(Type.EmptyTypes);
                 if (constructor == null)
                 {
-                    var fileGenerator = new ClassWithConstructorArguments(type.GetProperties().ToList(), Namespace, type.Name,type.GetConstructors());
+                    var fileGenerator = new ClassWithConstructorArguments(type.GetProperties().ToList(), Namespace, type.Name, type.GetConstructors());
                     return fileGenerator.TransformText();
                 }
                 else
@@ -65,24 +65,31 @@ namespace JsonTranslator
             var typesTobeConverted = _assembly.GetTypes();
             foreach (var type in typesTobeConverted)
             {
+                if (fileDictionary.ContainsKey(type.Namespace + "." + type.Name)) { continue; }
                 if (type.IsAbstract)
                     continue;
+                if (type.IsGenericType)
+                {
+                    if (true)
+                        continue;
+                }
                 if (type.IsEnum)
                 {
-                    new EnumJsonTranslator(type.Namespace, type.Name, type);
+                    var enumGenerator = new EnumJsonTranslator(type.Namespace, type.Name, type);
+                    fileDictionary.Add(type.Namespace + "." + type.Name, enumGenerator.TransformText());
                     continue;
                 }
 
-                var fileGenerator = new ClassWithConstructorArguments(type.GetProperties().ToList(), type.Namespace, type.Name,type.GetConstructors(BindingFlags.Public));
+                var fileGenerator = new ClassWithConstructorArguments(type.GetProperties().ToList(), type.Namespace, type.Name, type.GetConstructors());
                 fileDictionary.Add(type.Namespace + "." + type.Name, fileGenerator.TransformText());
             }
             return fileDictionary;
         }
-        public string ToCamelCase(string the_string)
-        {
-            return the_string.Substring(0, 1).ToLower() +
-                the_string.Substring(1);
-        }
+        //public string ToCamelCase(string the_string)
+        //{
+        //    return the_string.Substring(0, 1).ToLower() +
+        //        the_string.Substring(1);
+        //}
 
         public bool IsSerializerRequired(PropertyInfo propertyInfo)
         {

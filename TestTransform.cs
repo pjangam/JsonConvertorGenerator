@@ -12,16 +12,16 @@ namespace JsonTranslator
         [TestMethod]
         public void TestTransform()
         {
-            string path = @"D:\Code\SceptrAPIs\New\Connector\Entities\Translators\";
-            var fileGenerator = new FileGenerator(Assembly.LoadFrom(@"D:\Code\SceptrAPIs\New\Connector\Entities\Entities\bin\Debug\Tavisca.Connector.Hotels.Entities.dll"), "Tavisca.Connector.Hotels");
+            string path = @"D:\temp\translators\";
+            var fileGenerator = new FileGenerator(Assembly.LoadFrom(@"D:\Code\Platform\New\Connector\ean\RoomRates\bin\Debug\Tavisca.Connector.Hotels.EAN.RoomRates.dll"), "Tavisca.Connector.Hotels.EAN.RoomRates");
             var files = fileGenerator.TransformFiles();
             foreach (var fileName in files.Keys)
             {
                 try
                 {
                     var parts = fileName.Split('.');
-                    Directory.CreateDirectory(path+ parts[parts.Length - 2]);
-                    File.WriteAllText(path +parts[parts.Length-2]+@"\" + parts.Last()+"Translator.cs", files[fileName]);
+                    Directory.CreateDirectory(path + parts[parts.Length - 2]);
+                    File.WriteAllText(path + parts[parts.Length - 2] + @"\" + parts.Last() + "Translator.cs", files[fileName]);
                 }
                 catch (Exception ex)
                 {
@@ -30,6 +30,7 @@ namespace JsonTranslator
                 }
             }
             Console.WriteLine("Done");
+
 
         }
     }

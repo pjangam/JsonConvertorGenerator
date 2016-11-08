@@ -18,7 +18,7 @@ namespace JsonTranslator
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+    #line 1 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class FileGenerator : FileGeneratorBase
     {
@@ -31,7 +31,7 @@ namespace JsonTranslator
             this.Write("using Newtonsoft.Json;\r\nusing Tavisca.Platform.Common.Serialization;\r\nusing #=Nam" +
                     "espace#;\r\n\r\n\r\n");
             
-            #line 11 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 11 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
  
 var fileNamespace=Namespace;
 
@@ -40,53 +40,53 @@ var fileNamespace=Namespace;
             #line hidden
             this.Write("namespace ");
             
-            #line 14 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 14 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Namespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    public class ");
             
-            #line 16 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 16 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
             this.Write("Translator : JsonTranslator<");
             
-            #line 16 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 16 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
             this.Write(">\r\n    {\r\n        protected override ");
             
-            #line 18 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 18 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
             this.Write(" CreateNew()\r\n        {\r\n            return new ");
             
-            #line 20 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 20 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
             this.Write("();\r\n        }\r\n\r\n        protected override void SetupParser(JsonParser<");
             
-            #line 23 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 23 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
             #line hidden
             this.Write("> parser)\r\n        {\r\n                parser");
             
-            #line 25 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 25 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
 int propertiesCount=Properties.Count;
            foreach (var propertyName in Properties)
 		   {
-		   var camelCaseName=ToCamelCase(propertyName.Name);
+		   var camelCaseName=(propertyName.Name);
 			if(Properties.IndexOf(propertyName)==propertiesCount-1)
 		    {
             
@@ -94,42 +94,42 @@ int propertiesCount=Properties.Count;
             #line hidden
             this.Write(".Setup(\"");
             
-            #line 30 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 30 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(camelCaseName));
             
             #line default
             #line hidden
             this.Write("\", (r, v) => ");
             
-            #line 30 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 30 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetPropertySetter(propertyName)));
             
             #line default
             #line hidden
             this.Write(");\r\n\t\t\t");
             
-            #line 31 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 31 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
 }else{
             
             #line default
             #line hidden
             this.Write(".Setup(\"");
             
-            #line 31 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 31 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(camelCaseName));
             
             #line default
             #line hidden
             this.Write("\", (r, v) => ");
             
-            #line 31 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 31 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(GetPropertySetter(propertyName)));
             
             #line default
             #line hidden
             this.Write(")\r\n\t\t\t");
             
-            #line 32 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 32 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
 }
 			}
             
@@ -137,7 +137,7 @@ int propertiesCount=Properties.Count;
             #line hidden
             this.Write("\r\n\t }\r\n        protected override void Serialize(JsonWriter writer, ");
             
-            #line 36 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 36 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ClassName));
             
             #line default
@@ -145,11 +145,11 @@ int propertiesCount=Properties.Count;
             this.Write(" value, JsonSerializer serializer)\r\n        {\r\n             writer.WriteStartObje" +
                     "ct();\r\n             writer");
             
-            #line 39 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 39 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
  		 
 		foreach (var propertyName in Properties)
 		{
-		var camelCaseName=ToCamelCase(propertyName.Name);
+		var camelCaseName=(propertyName.Name);
 		bool serializationRequired=IsSerializerRequired(propertyName);
 		if(Properties.IndexOf(propertyName)==propertiesCount-1)
 		{
@@ -161,21 +161,21 @@ int propertiesCount=Properties.Count;
             #line hidden
             this.Write(".WriteField(\"");
             
-            #line 48 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 48 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(camelCaseName));
             
             #line default
             #line hidden
             this.Write("\", value.");
             
-            #line 48 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 48 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(propertyName.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n\t\t\t");
             
-            #line 49 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 49 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
 }
 		   else 
 			{
@@ -184,21 +184,21 @@ int propertiesCount=Properties.Count;
             #line hidden
             this.Write(".WriteField(\"");
             
-            #line 51 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 51 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(camelCaseName));
             
             #line default
             #line hidden
             this.Write("\", value.");
             
-            #line 51 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 51 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(propertyName.Name));
             
             #line default
             #line hidden
             this.Write(",serializer);\r\n\t\t\t");
             
-            #line 52 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 52 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
 }
 			}	
 		else
@@ -211,21 +211,21 @@ int propertiesCount=Properties.Count;
             #line hidden
             this.Write(".WriteField(\"");
             
-            #line 58 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 58 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(camelCaseName));
             
             #line default
             #line hidden
             this.Write("\", value.");
             
-            #line 58 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 58 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(propertyName.Name));
             
             #line default
             #line hidden
             this.Write(")\r\n\t\t   ");
             
-            #line 59 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 59 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
 }
 		   else
 		   {
@@ -234,21 +234,21 @@ int propertiesCount=Properties.Count;
             #line hidden
             this.Write(".WriteField(\"");
             
-            #line 61 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 61 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(camelCaseName));
             
             #line default
             #line hidden
             this.Write("\", value.");
             
-            #line 61 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 61 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(propertyName.Name));
             
             #line default
             #line hidden
             this.Write(",serializer)\r\n\t\t   ");
             
-            #line 62 "D:\Code\SceptrAPIs\New\Tools\JsonTranslator\FileGenerator.tt"
+            #line 62 "D:\Code\Platform\New\Tools\JsonTranslator\FileGenerator.tt"
 }
 		   }
 		   }

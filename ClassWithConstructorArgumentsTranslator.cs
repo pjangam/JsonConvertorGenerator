@@ -17,14 +17,17 @@ namespace JsonTranslator
         public List<PropertyInfo> Properties { get; set; }
         private Assembly _assembly { get; set; }
         private List<Type> _types { get; set; }
-        public List<string> ConstructorParameters { get; set; }
+        public List<List<string>> ConstructorsParameters { get; set; }
+
+        public List<string> fieldsCreated { get; set; }
 
         public ClassWithConstructorArguments(List<PropertyInfo> properties, string namespaceName, string className, ConstructorInfo[] constructors)
         {
             Properties = properties;
             ClassName = className;
             Namespace = namespaceName;
-            ConstructorParameters = constructors.Last().GetParameters().Select(p=>p.Name).ToList();
+            ConstructorsParameters = constructors.Select(x => x.GetParameters().Select(p => p.Name).ToList()).ToList();
+            fieldsCreated = new List<string>();
         }
         public ClassWithConstructorArguments(Assembly assembly, string namespaceName)
         {
@@ -61,11 +64,7 @@ namespace JsonTranslator
             }
             return fileDictionary;
         }
-        public string ToCamelCase(string the_string)
-        {
-            return the_string.Substring(0, 1).ToLower() +
-                the_string.Substring(1);
-        }
+
 
         public bool IsSerializerRequired(PropertyInfo propertyInfo)
         {
@@ -100,13 +99,11 @@ namespace JsonTranslator
                 var propertyTypeName = propertyType.Name;
                 var propertyTypeNamespace = propertyType.Namespace;
                 StringBuilder stringBuilder = new StringBuilder();
-
                 if (propertyTypeNamespace.StartsWith("System"))
                 {
                     if (propertyType == typeof(DateTime))
                     {
-                        stringBuilder.AppendLine("DateTime " + propertyName + ";");
-                        stringBuilder.AppendLine("DateTime.TryParse(json.ReadAsString(\"" + propertyName + "\"), out " + propertyName + ");");
+                        stringBuilder.AppendLine("var " + propertyName + "=json.ReadAsDateTime(\"" + GetJsonPropertyName(propertyName) + "\",reader.Path);");
                         return stringBuilder.ToString();
                     }
                     else if (propertyType == typeof(string))
@@ -117,31 +114,53 @@ namespace JsonTranslator
                     else if (propertyType == typeof(Guid))
                     {
                         stringBuilder.AppendLine("Guid " + propertyName + ";");
-                        stringBuilder.AppendLine("Guid.TryParse(json.ReadAsString(\"" + GetJsonPropertyName(propertyName) + "\"), out " + propertyName + ");");
+                        stringBuilder.AppendLine("\t\t\tGuid.TryParse(json.ReadAsString(\"" + GetJsonPropertyName(propertyName) + "\"), out " + propertyName + ");");
                         return stringBuilder.ToString();
                     }
                     else if (propertyType == typeof(int))
                     {
                         stringBuilder.AppendLine("int " + propertyName + ";");
-                        stringBuilder.AppendLine("int.TryParse(json.ReadAsString(\"" + GetJsonPropertyName(propertyName) + "\"), out " + propertyName + ");");
+                        stringBuilder.AppendLine("\t\t\tint.TryParse(json.ReadAsString(\"" + GetJsonPropertyName(propertyName) + "\"), out " + propertyName + ");");
+
                         return stringBuilder.ToString();
                     }
                     else if (propertyType == typeof(decimal))
                     {
                         stringBuilder.AppendLine("decimal " + propertyName + ";");
-                        stringBuilder.AppendLine("decimal.TryParse(json.ReadAsString(\"" + GetJsonPropertyName(propertyName) + "\"), out " + propertyName + ");");
+                        stringBuilder.AppendLine("\t\t\tdecimal.TryParse(json.ReadAsString(\"" + GetJsonPropertyName(propertyName) + "\"), out " + propertyName + ");");
+
                         return stringBuilder.ToString();
                     }
                     else if (propertyType == typeof(float))
                     {
                         stringBuilder.AppendLine("float " + propertyName + ";");
-                        stringBuilder.AppendLine("float.TryParse(json.ReadAsString(\"" + GetJsonPropertyName(propertyName) + "\"), out " + propertyName + ");");
+                        stringBuilder.AppendLine("\t\t\tfloat.TryParse(json.ReadAsString(\"" + GetJsonPropertyName(propertyName) + "\"), out " + propertyName + ");");
+
                         return stringBuilder.ToString();
                     }
                     else if (propertyType == typeof(bool))
                     {
                         stringBuilder.AppendLine("bool " + propertyName + ";");
-                        stringBuilder.AppendLine("bool.TryParse(json.ReadAsString(\"" + GetJsonPropertyName(propertyName) + "\"), out " + propertyName + ");");
+                        stringBuilder.AppendLine("\t\t\tbool.TryParse(json.ReadAsString(\"" + GetJsonPropertyName(propertyName) + "\"), out " + propertyName + ");");
+
+                        return stringBuilder.ToString();
+                    }
+                    else if (propertyType == typeof(Nullable<bool>))
+                    {
+                        stringBuilder.AppendLine("bool? " + propertyName + "=");
+                        stringBuilder.Append("json.ReadAsNullableBool(\"" + GetJsonPropertyName(propertyName) + "\",reader.Path);");
+                        return stringBuilder.ToString();
+                    }
+                    else if (propertyType == typeof(Nullable<int>))
+                    {
+                        stringBuilder.AppendLine("int? " + propertyName + "=");
+                        stringBuilder.Append("json.ReadAsNullableInt(\"" + GetJsonPropertyName(propertyName) + "\",reader.Path);");
+                        return stringBuilder.ToString();
+                    }
+                    else if (propertyType == typeof(Nullable<decimal>))
+                    {
+                        stringBuilder.AppendLine("decimal? " + propertyName + "=");
+                        stringBuilder.Append("json.ReadAsNullableDecimal(\"" + GetJsonPropertyName(propertyName) + "\",reader.Path);");
                         return stringBuilder.ToString();
                     }
                     else if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() != typeof(Nullable<>))
@@ -158,6 +177,7 @@ namespace JsonTranslator
                         return "ReadAsObject<" + GetJsonPropertyName(propertyName) + ">(\"" + GetJsonPropertyName(propertyName) + "\"";
                     }
 
+
                 }
                 else if (propertyType.IsClass || propertyType.IsValueType)
                 {
@@ -173,8 +193,8 @@ namespace JsonTranslator
         }
 
         private Dictionary<string, string> _propertyMapper = new Dictionary<string, string> {
-            { "description","desc" },
-            {"number","num" }
+            //{ "description","desc" },
+            //{"number","num" }
         };
 
         private string GetJsonPropertyName(string propertyName)
@@ -188,12 +208,32 @@ namespace JsonTranslator
         }
 
 
-
+        private string GetJsonPropertyName(PropertyInfo prop)
+        {
+            if (prop.CustomAttributes != null)
+            {
+                var attributes = prop.CustomAttributes.ToList();
+                var jsonAttr = attributes.FirstOrDefault(a => a.AttributeType.Name == "JsonPropertyAttribute");
+                if (jsonAttr != null)
+                {
+                    return jsonAttr.ConstructorArguments.FirstOrDefault().Value.ToString();
+                }
+                else
+                {
+                    return prop.Name;
+                }
+            }
+            else
+            {
+                return prop.Name;
+            }
+            return "todo";
+        }
 
         private string GetPropertySetter(PropertyInfo propertyInfo)
         {
             var propertyType = propertyInfo.PropertyType;
-            var propertyName = ToCamelCase(propertyInfo.Name);
+            var propertyName = (propertyInfo.Name);
             return GetPropertySetter(propertyType, propertyName);
 
         }

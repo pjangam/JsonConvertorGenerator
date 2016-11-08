@@ -18,7 +18,7 @@ namespace JsonTranslator
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+    #line 1 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class EnumJsonTranslator : EnumJsonTranslatorBase
     {
@@ -28,17 +28,17 @@ namespace JsonTranslator
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using Newtonsoft.Json;\r\nusing Tavisca.Platform.Common.Serialization;\r\nusing Tavis" +
-                    "ca.Hotels;\r\nusing System;\r\n\r\nnamespace ");
+            this.Write("using Newtonsoft.Json;\r\nusing System;\r\nusing System;\r\nusing Tavisca.USG.Common.We" +
+                    "bAPIHandler;\r\n\r\nnamespace ");
             
-            #line 11 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 11 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EnumNamespace));
             
             #line default
             #line hidden
-            this.Write("\r\n{\r\n    public class ");
+            this.Write(".Translator\r\n{\r\n    public class ");
             
-            #line 13 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 13 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EnumName));
             
             #line default
@@ -47,14 +47,14 @@ namespace JsonTranslator
                     "sonWriter writer, object value, JsonSerializer serializer)\r\n        {\r\n         " +
                     "   var enumValue = (");
             
-            #line 18 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 18 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EnumName));
             
             #line default
             #line hidden
             this.Write(") value;\r\n            switch (enumValue)\r\n            {");
             
-            #line 20 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 20 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
  foreach(var enumValue in EnumValues)
 				{
             
@@ -62,37 +62,43 @@ namespace JsonTranslator
             #line hidden
             this.Write("\r\n                case ");
             
-            #line 23 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 23 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EnumName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 23 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 23 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enumValue));
             
             #line default
             #line hidden
             this.Write(":\r\n                    writer.WriteValue(\"");
             
-            #line 24 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 24 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enumValue));
             
             #line default
             #line hidden
             this.Write("\");\r\n                   break;  \r\n\t\t\t\t");
             
-            #line 26 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 26 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
  }
             
             #line default
             #line hidden
-            this.Write("\t              \r\n                default:\r\n                    throw new Argument" +
-                    "OutOfRangeException();\r\n            }\r\n        }\r\n\r\n        public override bool" +
-                    " CanConvert(Type objectType)\r\n        {\r\n            return typeof (");
+            this.Write(@"	              
+                default:
+                    throw new NotImplementedException($""Translator not implemented for {enumValue}"");
+            }
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return typeof (");
             
-            #line 34 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 34 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EnumName));
             
             #line default
@@ -108,7 +114,7 @@ namespace JsonTranslator
             {
 			  ");
             
-            #line 43 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 43 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
 foreach(var enumValue in EnumValues)
 				{
             
@@ -116,35 +122,48 @@ foreach(var enumValue in EnumValues)
             #line hidden
             this.Write("\r\n                case \"");
             
-            #line 46 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 46 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enumValue.ToLower()));
             
             #line default
             #line hidden
             this.Write("\":\r\n                    return ");
             
-            #line 47 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 47 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(EnumName));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 47 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 47 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enumValue));
             
             #line default
             #line hidden
             this.Write("; \r\n\t\t\t\t\t");
             
-            #line 48 "E:\SvnExcelOper\trunk\JsonTranslator\EnumJsonTranslator.tt"
+            #line 48 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
  }
             
             #line default
             #line hidden
-            this.Write("             \r\n                default:\r\n                    throw new ArgumentOu" +
-                    "tOfRangeException($\"Invalid value : {value}\");\r\n            }\r\n        }\r\n    }\r" +
-                    "\n}");
+            this.Write("             \r\n                default:\r\n                    SerializerUtility.Th" +
+                    "rowValidationException(reader.Path, \" any one of ");
+            
+            #line 50 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(GetCommaSeperated(EnumValues)));
+            
+            #line default
+            #line hidden
+            this.Write("\");\r\n                    return default(");
+            
+            #line 51 "D:\Code\Platform\New\Tools\JsonTranslator\EnumJsonTranslator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(EnumName));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n            }\r\n        }\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

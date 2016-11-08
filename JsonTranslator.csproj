@@ -50,7 +50,7 @@
       <DependentUpon>ClassWithConstructorArguments.tt</DependentUpon>
     </Compile>
     <Compile Include="EnumJsonTranslateFileGenerator.cs" />
-    <Compile Include="EnumJsonTranslator.cs">
+    <Compile Include="EnumJsonTranslator1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EnumJsonTranslator.tt</DependentUpon>
@@ -76,7 +76,7 @@
     </Content>
     <Content Include="EnumJsonTranslator.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>EnumJsonTranslator.cs</LastGenOutput>
+      <LastGenOutput>EnumJsonTranslator1.cs</LastGenOutput>
     </Content>
     <Content Include="FileGenerator.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
