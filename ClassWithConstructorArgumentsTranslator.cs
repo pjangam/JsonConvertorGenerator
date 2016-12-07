@@ -138,6 +138,12 @@ namespace JsonTranslator
                         stringBuilder.AppendLine("float.TryParse(json.ReadAsString(\"" + GetJsonPropertyName(propertyName) + "\"), out " + propertyName + ");");
                         return stringBuilder.ToString();
                     }
+                    else if (propertyType == typeof(double))
+                    {
+                        stringBuilder.AppendLine("double " + propertyName + ";");
+                        stringBuilder.AppendLine("double.TryParse(json.ReadAsString(\"" + GetJsonPropertyName(propertyName) + "\"), out " + propertyName + ");");
+                        return stringBuilder.ToString();
+                    }
                     else if (propertyType == typeof(bool))
                     {
                         stringBuilder.AppendLine("bool " + propertyName + ";");

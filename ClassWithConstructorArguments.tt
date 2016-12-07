@@ -4,7 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 using Newtonsoft.Json;
-using Tavisca.Platform.Common.Serialization;
+using Tavisca.USG.Cars.Common;
 using <#=Namespace#>;
 using Newtonsoft.Json.Linq;
 using System;
@@ -32,7 +32,7 @@ namespace <#=Namespace#>.Translator
 		{
 		   if(!serializationRequired)
 		    {
-		    #>.WriteField("<#=camelCaseName#>", actualObject.<#=propertyName.Name#>.ToString());
+		    #>.WriteField("<#=camelCaseName#>", actualObject.<#=propertyName.Name#>);
 			<#}
 		   else 
 			{#>.WriteField("<#=camelCaseName#>", actualObject.<#=propertyName.Name#>,serializer);
@@ -42,7 +42,7 @@ namespace <#=Namespace#>.Translator
 		{
 		  if(!serializationRequired)
 		   {
-		   #>.WriteField("<#=camelCaseName#>", actualObject.<#=propertyName.Name#>.ToString())
+		   #>.WriteField("<#=camelCaseName#>", actualObject.<#=propertyName.Name#>)
 		   <#}
 		   else
 		   {#>.WriteField("<#=camelCaseName#>", actualObject.<#=propertyName.Name#>,serializer)
@@ -70,7 +70,7 @@ namespace <#=Namespace#>.Translator
 			{#>var <#=camelCaseName#>=json.<#=GetPropertySetter(propertyName)#>,serializer);
 			<#}			
 			}#>
-            var actualObject=new <#=ClassName#>(			<#foreach (var propertyName in ConstructorParameters)		   {			 #><#=propertyName#>,	<#}#>);
+            var actualObject=new <#=ClassName#>(<#=string.Join(",",ConstructorParameters)#>);
 			return actualObject;
         }
        public override bool CanConvert(Type objectType)

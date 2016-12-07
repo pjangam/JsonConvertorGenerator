@@ -16,5 +16,16 @@ namespace JsonTranslator
             EnumName = enumName;
             EnumValues = Enum.GetNames(enumType).ToList();
         }
+
+        public string ToCamelCase(string the_string)
+        {
+            return the_string.Substring(0, 1).ToLower() +
+                the_string.Substring(1);
+        }
+
+        public string GetCommaSeperated(List<string> ls)
+        {
+            return string.Join(",",ls);
+        }
     }
 }

@@ -4,7 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 using Newtonsoft.Json;
-using Tavisca.Platform.Common.Serialization;
+using Tavisca.USG.Cars.Common;
 using Tavisca.Hotels;
 using System;
 
@@ -21,11 +21,11 @@ namespace <#=EnumNamespace#>
 				{#>
 
                 case <#=EnumName#>.<#=enumValue#>:
-                    writer.WriteValue("<#=enumValue#>");
+                    writer.WriteValue("<#=ToCamelCase(enumValue)#>");
                    break;  
 				<# }#>	              
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new NotImplementedException($"Translator not implemented for {enumValue}");
             }
         }
 
@@ -47,7 +47,8 @@ namespace <#=EnumNamespace#>
                     return <#=EnumName#>.<#=enumValue#>; 
 					<# }#>             
                 default:
-                    throw new ArgumentOutOfRangeException($"Invalid value : {value}");
+                    SerializerUtility.ThrowValidationException(reader.Path, " any one of <#=GetCommaSeperated(EnumValues)#>");
+                    return default(<#=EnumName#>);
             }
         }
     }

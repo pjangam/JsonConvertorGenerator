@@ -12,8 +12,8 @@ namespace JsonTranslator
         [TestMethod]
         public void TestTransform()
         {
-            string path = @"D:\Code\SceptrAPIs\New\Connector\Entities\Translators\";
-            var fileGenerator = new FileGenerator(Assembly.LoadFrom(@"D:\Code\SceptrAPIs\New\Connector\Entities\Entities\bin\Debug\Tavisca.Connector.Hotels.Entities.dll"), "Tavisca.Connector.Hotels");
+            string path = @"D:\Code\Platform\New\USG\Car\Tavisca.USG.Car\src\Tavisca.USG.Cars.Translators\";
+            var fileGenerator = new FileGenerator(Assembly.LoadFrom(@"C:\Users\pjangam\Documents\visual studio 2015\Projects\ClassLibrary1\ClassLibrary1\bin\Debug\ClassLibrary1.dll"), " Tavisca.USG.Cars.Translators");
             var files = fileGenerator.TransformFiles();
             foreach (var fileName in files.Keys)
             {
@@ -21,7 +21,7 @@ namespace JsonTranslator
                 {
                     var parts = fileName.Split('.');
                     Directory.CreateDirectory(path+ parts[parts.Length - 2]);
-                    File.WriteAllText(path +parts[parts.Length-2]+@"\" + parts.Last()+"Translator.cs", files[fileName]);
+                    File.WriteAllText(path  + parts.Last()+"Translator.cs", files[fileName]);
                 }
                 catch (Exception ex)
                 {

@@ -69,11 +69,13 @@ namespace JsonTranslator
                     continue;
                 if (type.IsEnum)
                 {
-                    new EnumJsonTranslator(type.Namespace, type.Name, type);
+                    var enumtranslator=new EnumJsonTranslator(type.Namespace, type.Name, type);
+                    fileDictionary.Add(type.Namespace + "." + type.Name,enumtranslator.TransformText());
+
                     continue;
                 }
 
-                var fileGenerator = new ClassWithConstructorArguments(type.GetProperties().ToList(), type.Namespace, type.Name,type.GetConstructors(BindingFlags.Public));
+                var fileGenerator = new ClassWithConstructorArguments(type.GetProperties().ToList(), type.Namespace, type.Name,type.GetConstructors());
                 fileDictionary.Add(type.Namespace + "." + type.Name, fileGenerator.TransformText());
             }
             return fileDictionary;
