@@ -95,7 +95,7 @@ namespace JsonTranslator
                 if (propertyTypeNamespace.StartsWith("System"))
                 {
 
-                    if (propertyType == typeof(string) || propertyType == typeof(Guid) || propertyType.GetGenericTypeDefinition() == typeof(Nullable<>) || propertyType.IsPrimitive)
+                    if (propertyType == typeof(string) || propertyType == typeof(Guid) || propertyType.GetGenericTypeDefinition() == typeof(Nullable<>) || propertyType.IsPrimitive || (propertyType.GetGenericArguments().Any(t => t.IsValueType && t.IsPrimitive)))
                     {
                         return false;
                     }

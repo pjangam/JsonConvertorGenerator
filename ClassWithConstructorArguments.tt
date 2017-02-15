@@ -70,7 +70,14 @@ namespace <#=Namespace#>.Translator
 			{#>var <#=camelCaseName#>=json.<#=GetPropertySetter(propertyName)#>,serializer);
 			<#}			
 			}#>
-            var actualObject=new <#=ClassName#>(<#=string.Join(",",ConstructorParameters)#>);
+            var actualObject=new <#=ClassName#>(<#=string.Join(",",ConstructorParameters)#>)
+			{
+				<#foreach (var propertyName in Properties)
+				{
+		             var camelCaseName=ToCamelCase(propertyName.Name);
+		             #><#=propertyName.Name#> = <#=camelCaseName#>,
+			<#}#>
+			};
 			return actualObject;
         }
        public override bool CanConvert(Type objectType)
