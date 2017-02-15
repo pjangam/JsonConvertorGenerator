@@ -12,8 +12,8 @@ namespace JsonTranslator
         [TestMethod]
         public void TestTransform()
         {
-            string path = @"D:\Code\Platform\New\USG\Car\Tavisca.USG.Car\src\Tavisca.USG.Cars.Translators\";
-            var fileGenerator = new FileGenerator(Assembly.LoadFrom(@"C:\Users\pjangam\Documents\visual studio 2015\Projects\ClassLibrary1\ClassLibrary1\bin\Debug\ClassLibrary1.dll"), " Tavisca.USG.Cars.Translators");
+            string path = @"D:\Tavisca.USG.Cars.StateTranslators\";
+            var fileGenerator = new FileGenerator(Assembly.LoadFrom(@"D:\Model.dll"), "Tavisca.USG.Cars.StateTranslators");
             var files = fileGenerator.TransformFiles();
             foreach (var fileName in files.Keys)
             {
